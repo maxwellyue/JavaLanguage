@@ -1,4 +1,4 @@
-package Concurrency;
+package concurrency;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.locks.Condition;

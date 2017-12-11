@@ -1,4 +1,4 @@
-package Concurrency;
+package concurrency;
 
 import java.util.HashMap;
 import java.util.Map;

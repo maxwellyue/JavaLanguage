@@ -39,11 +39,38 @@ class Client {
 
 
     @Test
-    public void testRemainderHash() {
+    public void testBalance() {
+
+        int serverNum = 5;
+        int objectNum = 10000;
+
+        List<String> serverNodes = new ArrayList<>(serverNum);
+        Map<String, Integer> countMap = new HashMap<>(serverNum);
+
+        for (int i = 1; i <= serverNum; i++) {
+            String serverNode = "服务器" + i;
+            serverNodes.add(serverNode);
+            countMap.put(serverNode, 0);
+        }
+
+        RemainderHash hash = new RemainderHash(serverNodes);
+        for (int i = 0; i < objectNum; i++) {
+            String serverNode = hash.getServerNode("数据" + i);
+            countMap.put(serverNode, countMap.get(serverNode) + 1);
+        }
+
+        for(Map.Entry entry : countMap.entrySet()){
+            System.out.println(entry.getKey() + "上数据占比：" + (double)(int)entry.getValue()/(double)objectNum * 100 + "%");
+        }
+
+    }
+
+
+    @Test
+    public void testRepeatHitAfterServerExpand() {
 
         int originServerNum = 100;
         int serverNum = 101;
-
         int objectNum = 10000;
 
         List<String> originServerNodes = new ArrayList<>(originServerNum);
@@ -85,7 +112,7 @@ class Client {
             List<String> second = countMap.get(serverNodes.get(i));
             for (int j = 0; j < objectNum; j++) {
                 String data = "数据" + j;
-                if(first.contains(data) && second.contains(data)){
+                if (first.contains(data) && second.contains(data)) {
                     repeatHit++;
                 }
             }

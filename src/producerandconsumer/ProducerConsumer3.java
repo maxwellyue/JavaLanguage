@@ -15,6 +15,7 @@ import java.util.concurrent.LinkedBlockingDeque;
  * put():阻塞地放入元素
  * take():阻塞地取出元素
  *
+ *
  * 创建人：岳增存  yuezc@seentao.com
  * 创建时间： 2017年12月19日 --  下午8:02 
  * 其他说明：

@@ -17,7 +17,12 @@ import java.util.concurrent.locks.ReentrantLock;
  * await():等待Condition的满足，会释放锁
  * signal():唤醒其他正在等待该Conditon的线程
  *
+ * 性能简单分析：
+ * 在本实现中，使用了两个Condition，来控制队列的不空和溢出问题，
+ * 但仍是使用的同一个锁，性能与使用wait() / notify()类似。
  *
+ * 如果要实现同一时刻，既可以放入又可以取出，则要使用两个重入锁，分别控制放入和取出的操作，
+ * 具体实现可以参考LinkedBlockingQueue
  *
  * 创建人：岳增存  yuezc@seentao.com
  * 创建时间： 2017年12月19日 --  下午7:31 
@@ -52,7 +57,7 @@ public class ProducerConsumer2 {
                 //模拟生产过程中的耗时操作
                 Goods goods = new Goods();
                 try {
-                    Thread.sleep(new Random().nextInt(1000));
+                    Thread.sleep(new Random().nextInt(100));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -118,7 +123,7 @@ public class ProducerConsumer2 {
 
                 //模拟消费过程中的耗时操作
                 try {
-                    Thread.sleep(new Random().nextInt(1000));
+                    Thread.sleep(new Random().nextInt(100));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -129,7 +134,7 @@ public class ProducerConsumer2 {
     @Test
     public void test() {
 
-        int maxSize = 10;
+        int maxSize = 5;
         Queue<Goods> queue = new LinkedList<>();
         Lock lock = new ReentrantLock();
         Condition notEmptyCondition = lock.newCondition();
@@ -141,6 +146,7 @@ public class ProducerConsumer2 {
 
         Thread consumer1 = new ProducerConsumer2.Consumer("消费者1", queue, lock, notFullCondition, notEmptyCondition);
         Thread consumer2 = new ProducerConsumer2.Consumer("消费者2", queue, lock, notFullCondition, notEmptyCondition);
+        Thread consumer3 = new ProducerConsumer2.Consumer("消费者3", queue, lock, notFullCondition, notEmptyCondition);
 
 
         producer1.start();
@@ -148,7 +154,7 @@ public class ProducerConsumer2 {
         producer3.start();
         consumer1.start();
         consumer2.start();
-
+        consumer3.start();
         while (true) {
 
         }

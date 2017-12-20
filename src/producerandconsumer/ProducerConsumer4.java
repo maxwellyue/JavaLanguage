@@ -35,6 +35,15 @@ import java.util.concurrent.Semaphore;
  *      in the application.
  *
  *
+ * 性能简单分析：
+ * 由于实现中，使用了concurrentWriteSemaphore实现了对队列并发写的控制，
+ * 在同一时刻，只能对队列进行一种操作：放入或取出。
+ * 你可能会说，
+ * 但假如把concurrentWriteSemaphore中的信号量初始化为2或者2以上的值，
+ * 就会出现多个生产者同时放入或多个消费者同时消费的情况，
+ * 所以，concurrentWriteSemaphore只能设置为1，
+ * 也就导致性能与使用wait() / notify()方式类似，性能不高
+ *
  *
  * 创建人：岳增存  yuezc@seentao.com
  * 创建时间： 2017年12月19日 --  下午9:04 
@@ -66,7 +75,7 @@ public class ProducerConsumer4 {
                 //模拟生产过程中的耗时操作
                 Goods goods = new Goods();
                 try {
-                    Thread.sleep(new Random().nextInt(1000));
+                    Thread.sleep(new Random().nextInt(100));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -119,7 +128,7 @@ public class ProducerConsumer4 {
 
                 //模拟消费过程中的耗时操作
                 try {
-                    Thread.sleep(new Random().nextInt(1000));
+                    Thread.sleep(new Random().nextInt(100));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -144,6 +153,7 @@ public class ProducerConsumer4 {
 
         Thread consumer1 = new ProducerConsumer4.Consumer("消费者1", queue, concurrentWriteSemaphore, queueSizeSemaphore, notEmptySemaphore);
         Thread consumer2 = new ProducerConsumer4.Consumer("消费者2", queue, concurrentWriteSemaphore, queueSizeSemaphore, notEmptySemaphore);
+        Thread consumer3 = new ProducerConsumer4.Consumer("消费者3", queue, concurrentWriteSemaphore, queueSizeSemaphore, notEmptySemaphore);
 
 
         producer1.start();
@@ -151,7 +161,7 @@ public class ProducerConsumer4 {
         producer3.start();
         consumer1.start();
         consumer2.start();
-
+        consumer3.start();
         while (true) {
 
         }

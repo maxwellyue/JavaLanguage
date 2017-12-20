@@ -3,8 +3,8 @@ package producerandconsumer;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /************************************************************************************
  * 功能描述：
@@ -14,6 +14,13 @@ import java.util.concurrent.LinkedBlockingDeque;
  * 记住两个阻塞取放方法：
  * put():阻塞地放入元素
  * take():阻塞地取出元素
+ *
+ * 性能简单分析：
+ * 如果使用LinkedBlockingQueue作为队列实现，则可以实现：
+ * 在同一时刻，既可以放入又可以取出，因为LinkedBlockingQueue内部使用了两个重入锁，分别控制取出和放入。
+ * 性能优于wait() / notify()方式实现。
+ *
+ * 如果使用ArrayBlockingQueue，则在同一时刻只能放入或取出，因为ArrayBlockingQueue内部只使用了一个重入锁来控制并发修改操作。
  *
  *
  * 创建人：岳增存  yuezc@seentao.com
@@ -26,9 +33,9 @@ public class ProducerConsumer3 {
 
     class Producer extends Thread {
         private String threadName;
-        private BlockingDeque<Goods> queue;
+        private BlockingQueue<Goods> queue;
 
-        public Producer(String threadName, BlockingDeque<Goods> queue) {
+        public Producer(String threadName, BlockingQueue<Goods> queue) {
             this.threadName = threadName;
             this.queue = queue;
         }
@@ -39,7 +46,7 @@ public class ProducerConsumer3 {
                 Goods goods = new Goods();
                 try {
                     //模拟生产过程中的耗时操作
-                    Thread.sleep(new Random().nextInt(1000));
+                    Thread.sleep(new Random().nextInt(100));
                     queue.put(goods);
                     System.out.println("【" + threadName + "】生产了一个商品：【" + goods.toString() + "】，目前商品数量：" + queue.size());
                 } catch (InterruptedException e) {
@@ -51,9 +58,9 @@ public class ProducerConsumer3 {
 
     class Consumer extends Thread {
         private String threadName;
-        private BlockingDeque<Goods> queue;
+        private BlockingQueue<Goods> queue;
 
-        public Consumer(String threadName, BlockingDeque<Goods> queue) {
+        public Consumer(String threadName, BlockingQueue<Goods> queue) {
             this.threadName = threadName;
             this.queue = queue;
         }
@@ -65,7 +72,7 @@ public class ProducerConsumer3 {
                     Goods goods = queue.take();
                     System.out.println("【" + threadName + "】消费了一个商品：【" + goods.toString() + "】，目前商品数量：" + queue.size());
                     //模拟消费过程中的耗时操作
-                    Thread.sleep(new Random().nextInt(1000));
+                    Thread.sleep(new Random().nextInt(100));
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -77,7 +84,7 @@ public class ProducerConsumer3 {
     public void test() {
 
         int maxSize = 5;
-        BlockingDeque<Goods> queue = new LinkedBlockingDeque<>(maxSize);
+        BlockingQueue<Goods> queue = new LinkedBlockingQueue<>(maxSize);
 
         Thread producer1 = new ProducerConsumer3.Producer("生产者1", queue);
         Thread producer2 = new ProducerConsumer3.Producer("生产者2", queue);

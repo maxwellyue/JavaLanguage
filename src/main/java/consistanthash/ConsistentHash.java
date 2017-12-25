@@ -1,4 +1,4 @@
-package consistanthash;
+package main.java.consistanthash;
 
 import java.util.Collection;
 import java.util.SortedMap;

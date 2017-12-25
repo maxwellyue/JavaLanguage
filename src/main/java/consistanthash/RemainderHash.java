@@ -1,4 +1,4 @@
-package consistanthash;
+package main.java.consistanthash;
 
 import org.junit.jupiter.api.Test;
 

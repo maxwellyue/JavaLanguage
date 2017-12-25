@@ -1,4 +1,4 @@
-package connectionpool;
+package main.java.connectionpool;
 
 import java.sql.*;
 import java.util.Enumeration;

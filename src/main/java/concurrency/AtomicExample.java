@@ -1,4 +1,5 @@
-package concurrency;
+package main.java.concurrency;
+
 
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package concurrency;
+package main.java.concurrency;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;

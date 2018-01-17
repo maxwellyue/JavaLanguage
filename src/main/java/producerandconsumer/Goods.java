@@ -1,4 +1,4 @@
-package main.java.producerandconsumer;
+package producerandconsumer;
 
 /************************************************************************************
  * 功能描述：

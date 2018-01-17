@@ -1,4 +1,4 @@
-package main.java.producerandconsumer;
+package producerandconsumer;
 
 import org.junit.jupiter.api.Test;
 

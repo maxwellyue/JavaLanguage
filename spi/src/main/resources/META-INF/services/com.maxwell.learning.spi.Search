@@ -1,0 +1,3 @@
+# 如果这里配置了两个实现类，则ServiceLoader都可以获取到，都会进行实例化
+com.maxwell.learning.spi.FileSearch
+com.maxwell.learning.spi.DatabaseSearch

@@ -14,8 +14,6 @@
 
 package com.maxwell.learning.event.eventbus;
 
-import EventBus;
-
 import java.lang.reflect.Method;
 
 import static com.google.common.base.Preconditions.checkNotNull;

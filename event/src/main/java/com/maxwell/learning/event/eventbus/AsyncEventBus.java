@@ -1,4 +1,3 @@
-
 package com.maxwell.learning.event.eventbus;
 
 import com.google.common.annotations.Beta;

@@ -14,8 +14,6 @@
 
 package com.maxwell.learning.event.eventbus;
 
-import SubscriberExceptionContext;
-
 /**
  * Handler for exceptions thrown by event subscribers.
  *

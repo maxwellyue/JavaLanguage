@@ -22,12 +22,9 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.*;
-import EventBus;
-import Subscribe;
+
 import com.google.common.reflect.TypeToken;
 import com.google.common.util.concurrent.UncheckedExecutionException;
-import com.google.j2objc.annotations.Weak;
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 
 import java.lang.reflect.Method;
 import java.util.*;
@@ -57,7 +54,7 @@ final class SubscriberRegistry {
     /**
      * The event bus this registry belongs to.
      */
-    @Weak
+    //todo 这里有个注解@Weak
     private final EventBus bus;
 
     SubscriberRegistry(EventBus bus) {
@@ -244,8 +241,9 @@ final class SubscriberRegistry {
             return Objects.hashCode(name, parameterTypes);
         }
 
+        //todo 这里有个注解 @NullableDecl Object o
         @Override
-        public boolean equals(@NullableDecl Object o) {
+        public boolean equals(Object o) {
             if (o instanceof MethodIdentifier) {
                 MethodIdentifier ident = (MethodIdentifier) o;
                 return name.equals(ident.name) && parameterTypes.equals(ident.parameterTypes);

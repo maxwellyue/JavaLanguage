@@ -21,6 +21,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 注意：这里的Dispatcher与订阅者的Executor含义不同：
  * Dispatcher控制事件的分发顺序，而订阅者的Executor负责当事件分发到订阅者后，订阅者如何执行（比如，在哪个线程中执行）。
  *
+ *
+ * todo 既然都是线程安全的，两种分发方式有什么区别？
+ *
+ * PerThreadQueuedDispatcher：外层遍历队列中的事件，内层该事件的订阅处理器。
+ * LegacyAsyncDispatcher：前后两个遍历：前一个遍历事件订阅处理器，并构建一个事件实体对象存入队列。
+ * 后一个循环是遍历该事件实体对象队列，取出事件实体对象中的事件进行分发。
+ *
+ *
+ *
  * @author Colin Decker
  */
 abstract class Dispatcher {
@@ -175,6 +184,9 @@ abstract class Dispatcher {
     }
 
     /**
+     *
+     * AsyncEventBus中默认的分发器
+     *
      * This dispatcher matches the original dispatch behavior of AsyncEventBus
      *
      * 在多线程环境下，该Dispatcher不会保证分发顺序，原因如下：
@@ -184,7 +196,7 @@ abstract class Dispatcher {
      * 2、订阅者被添加到该queue上的顺序与订阅者分发到事件的顺序可能不同。当一个线程取走了queue的头元素，
      * 而马上另一个线程取走了下一个元素，这是很有可能的。
      *
-     * 异步模式：
+     *
      *
      *
      */
@@ -239,7 +251,7 @@ abstract class Dispatcher {
     }
 
     /**
-     * 同步模式：一旦有事件发生，就会立即触发事件处理。
+     * 一旦有事件发生，就会立即触发事件处理。
      */
     private static final class ImmediateDispatcher extends Dispatcher {
 

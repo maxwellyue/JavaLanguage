@@ -13,6 +13,11 @@
         <module>consistanthash</module>
         <module>producerconsumer</module>
         <module>spi</module>
+        <module>event</module>
+        <module>limit</module>
+        <module>jmx</module>
+        <module>version-compatible</module>
+        <module>design-pattern</module>
     </modules>
     <name>learning</name>
     <modelVersion>4.0.0</modelVersion>

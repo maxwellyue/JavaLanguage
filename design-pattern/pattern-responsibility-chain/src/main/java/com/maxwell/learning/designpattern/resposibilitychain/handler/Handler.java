@@ -47,7 +47,7 @@ public interface Handler extends Comparable<Handler>{
 
 
     /**
-     *
+     * 按照从小到大顺序（按1,2,3...顺序执行）
      * @param handler
      * @return
      */

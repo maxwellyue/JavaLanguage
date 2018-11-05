@@ -1,8 +1,9 @@
-package com.maxwell.learning.limite;
+package com.maxwell.learning.common;
 
 /**
  * @author yuezengcun <yuezengcun@meicai.cn>
  * @since
  */
-public class YBBJ {
+public class Person {
+
 }

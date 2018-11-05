@@ -18,6 +18,16 @@
         <module>jmx</module>
         <module>version-compatible</module>
         <module>design-pattern</module>
+        <module>javaagent</module>
+        <module>common</module>
+        <module>bytecode</module>
+        <module>rpc</module>
+        <module>lambda</module>
+        <module>stream</module>
+        <module>degradation</module>
+        <module>buffer-queue</module>
+        <module>mq</module>
+        <module>spring</module>
     </modules>
     <name>learning</name>
     <modelVersion>4.0.0</modelVersion>
@@ -48,6 +58,11 @@
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0</version>
         </dependency>
     </dependencies>
 </project>

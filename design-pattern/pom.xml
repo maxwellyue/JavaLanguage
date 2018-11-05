@@ -15,6 +15,11 @@
     <modules>
         <module>pattern-responsibility-chain</module>
         <module>pattern-observer</module>
+        <module>pattern-flyweight</module>
+        <module>pattern-factory</module>
+        <module>pattern-decorator</module>
+        <module>pattern-state</module>
+        <module>pattern-visitor</module>
     </modules>
 
 

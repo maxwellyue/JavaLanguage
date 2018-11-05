@@ -8,21 +8,11 @@
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <description>限速设计</description>
-    <artifactId>limit</artifactId>
+    <artifactId>mq</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>rocket</module>
+    </modules>
 
 
-    <dependencies>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>20.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.9.0</version>
-        </dependency>
-    </dependencies>
 </project>
